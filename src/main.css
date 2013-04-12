@@ -1,0 +1,79 @@
+body 	{
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 75%;
+	line-height: 1.5;
+	color: #333;
+	background: #f1f1f1;
+	line-height: 1.5;
+}
+
+p, ul, ol	{
+	margin-bottom: 18px;
+}
+
+.wrapper	{
+	background: #fff;
+	width: 60em;
+	margin: 3em auto;
+	padding: 20px 10px;
+	clear: both;
+	display: block;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+label, input, select, textarea	{
+	padding: 5px 6px;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+label	{
+	font-weight: bold;
+	border: none;
+}
+
+label, a, button, input[type=button], input[type=submit]	{
+	cursor: pointer;
+}
+
+.bttn 	{
+	background-image: -webkit-linear-gradient(top, #eee, #ddd);
+	text-shadow: 0 1px 1px #fff;
+}
+
+.results ul	{
+	list-style-type: none;
+	margin: 0;
+	padding: 10px 0;
+	border-bottom: 1px dotted #d5d5d5;
+}
+
+.results ul li 	{
+	display: block;
+}
+
+.brand-categories	{
+	display: inline-block !important;
+	margin-right: 5px;
+	text-decoration: underline;
+}
+
+.brand-episode-title	{
+	margin-bottom: 18px;
+	font-weight: bold;
+}
+
+.brand-synopsis	{
+	margin-bottom: 18px;
+}
+
+.brand-until-time	{
+	font-weight: bold;
+}
