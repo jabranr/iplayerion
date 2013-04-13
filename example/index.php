@@ -66,7 +66,7 @@ $data;
 		<?php elseif ((isset($data) && !$data->count)) : ?>
 		
 		<p>
-			<strong>Sorry, but there are no episodes are available for this brand. Please try later.</strong>
+			<strong>Sorry, there are no episodes available for your searched brand. Please try later.</strong>
 		</p>
 
 		<?php endif; ?>

@@ -1,1 +1,3 @@
-<h1>An experimental library using BBC iPlayer API</h1>
+<h1>Search and Browse with BBC iPlayer API</h1>
+
+<p>The experiment is still in progress. An alpha example can be seen at <code>example/index.php</code></p>
