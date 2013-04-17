@@ -1,16 +1,3 @@
-<?php
-
-$data;
-	if ( isset($_GET['q']) && $_GET['q'] )	{
-		$endpoint = 'http://www.bbc.co.uk/iplayer/ion/searchextended/';
-		$data = json_decode(file_get_contents($endpoint . 'search_availability/iplayer/service_type/radio/format/json/q/' . htmlentities($_GET['q'])));
-
-		$pagination = $data->pagination;
-		$media = $data->blocklist;
-	}
-
-	?>
-
 <!doctype HTML>
 <html>
 <head>
@@ -28,48 +15,107 @@ $data;
 			<input type="submit" value="Search" class="bttn">
 		</form>
 		
-		<?php if ( isset( $data ) && ( $data->count ) )	: ?>
+		<?php
 
-		<div class="results">
-			<?php
+		if (isset($_GET['q']) && $_GET['q']) :
 
-			echo '<h3>Search results for "' . htmlentities($_GET['q']) .'"</h3>';
+			require_once('../src/api.php');
+			$bbcapi->query( htmlentities($_GET['q']) );
+			$data = $bbcapi->get_data();
 
-			foreach ($media as $brand) {
+			if ( $data && $data->total_results ) :
+				$media = $data->media;
+		?>
 
-			echo '<ul id="brand-' . $brand->id . '">';
-				if ($brand->brand_title)
-					echo '<li class="brand-title"><h3><a title="Listen to this series" href="//bbc.co.uk' . $brand->my_series_url . '">' . $brand->brand_title . '</a></h3></li>';
-				if ($brand->original_title)
-					echo '<li class="brand-episode-title">Available episode: <a title="Listen to this episode" href="//bbc.co.uk' . $brand->my_url . '">' . $brand->original_title . '</a></li>';
-				echo '<li class="brand-synopsis">' . $brand->synopsis . '</li>';
+			<div class="results">
 
-				if ( $brand->duration < 3540 )	{
-					$duration = gmdate('i', $brand->duration) . ' Minutes';
-				}
-				else 	{
-					$mins = (gmdate('i', $brand->duration) % 60 == 0) ? '' : gmdate('i', $brand->duration) . ' Minutes';
-					$duration = gmdate('G', $brand->duration) . ' Hours ' . $mins;
-				}
+				<?php
 
-				echo '<li class="brand-duration">' . $brand->masterbrand_title . ' &ndash; ' . $duration . '</li>';
-				echo '<li class="brand-until-time">' . ' Available until: ' . gmdate('jS F Y', strtotime($brand->available_until)) . '</li>';
-					foreach ($brand->categories as $category) {
-						echo '<li class="brand-categories">' . $category->title . '</li>';
+				echo '<h3>Search results for "' . htmlentities($_GET['q']) .'"</h3>';
+
+				foreach ($media as $brand) :
+
+				?>
+
+				<div id="brand-'<? echo $brand->id; ?>" class="brand">
+					<?php if ($brand->brand_title) : ?>
+						<div class="brand-title">
+							<h3 class="brand-title">
+								<?php echo $brand->brand_title; ?>
+							</h3>
+						</div>
+					<?php endif; ?>
+
+					<?php if ($brand->original_title) : ?>
+						<div class="brand-episode-title">
+							Available episode: 
+							<a title="Listen to this episode" href="<?php echo $data->websiteurl . $brand->my_url; ?>">
+								<?php echo $brand->original_title; ?>
+							</a>
+						</div>
+					<?php endif; ?>
+
+
+					<?php if ($brand->synopsis) : ?>
+						<div class="brand-synopsis">
+							<?php
+							$img = $brand->my_image_base_url ? $bbcapi->get_image_uri($brand->my_image_base_url, $brand->id) : ''; 
+							if ($img)
+								echo '<img src="' . $img . '" class="thumbnail" alt="' . $brand->original_title . '">';
+							echo $brand->synopsis;
+							?>
+						</div>
+					<?php 
+
+					endif;
+
+					if ( $brand->duration < 3540 ) {
+						$duration = gmdate('i', $brand->duration) . ' Minutes';
 					}
-			echo '</ul>';
-			}
+					else 	{
+						$mins = (gmdate('i', $brand->duration) % 60 == 0) ? '' : gmdate('i', $brand->duration) . ' Minutes';
+						$duration = gmdate('G', $brand->duration) . ' Hours ' . $mins;
+					}
+					
+					?>
+					
+					<div class="brand-duration">
+						<?php echo $brand->masterbrand_title ?> &ndash; <?php echo $duration; ?>
+					</div>
+					
+					<div class="brand-until-time">
+						Available until: <?php echo gmdate('jS F Y', strtotime($brand->available_until)); ?>
+					</div>
 
-			?>
-		</div>
+					<?php
+						foreach ($brand->categories as $category) {
+							echo '<div class="brand-categories">' . $category->title . '</div>';
+						}
+					?>
+				</div>
+				<?php endforeach; ?>
 
-		<?php elseif ( isset($data) && !$data->count ) : ?>
+				<?php
+				if ( $data->total_pages > 1 )	{
+					echo '<div class="pagination">';
+					for ($i = 1; $i < $data->total_pages; $i++) { 
+						$cls = $i == $data->current_page ? 'nav-item current-page-nav-item' : 'nav-item';
+						echo '<a href="#" class="' . $cls . '" title="Go to page ' . $i . '">' . $i . '</a>';
+					}
+				}
+				?>
+
+			</div>
+
+				<?php elseif ( isset($data) && !$data->total_results ) : ?>
 		
-		<p class="error results">
-			<strong>Sorry, there are no episodes available for your searched brand. Please try later.</strong>
-		</p>
+			<p class="error results">
+				<strong>Sorry, there are no episodes available for your searched brand. Please try later.</strong>
+			</p>
 
-			<?php elseif ( array_key_exists('q', $_GET) && empty($_GET['q']) ) : ?>
+			<?php endif; ?>
+
+		<?php elseif ( array_key_exists('q', $_GET) && empty($_GET['q']) ) : ?>
 		
 		<p class="error results">
 			<strong>Type a keyword for search results.</strong>

@@ -171,6 +171,15 @@ class IONAPI {
 			// @return: Set total pages
 			$this->__set( 'total_pages', ceil( $this->__get('total_results') / $this->get_perpage() ));
 
+			// @return: Setup next query
+			$total_pages = $this->__get('total_pages');
+			$current_page = $this->__get('current_page');
+
+			if ( ($total_pages > 1) && ($current_page < $total_pages) )	{
+				$next_page = $current_page+=1;
+				$this->__set('next_query', $this->get_current_query() . '/page/' . $next_page);
+			}
+
 			// @return: Set media data
 			return $this->__set( 'media', $data->blocklist  );
 		}

@@ -59,7 +59,9 @@ a:active	{
 }
 
 .bttn 	{
-	background-image: -webkit-linear-gradient(top, #eee, #ddd);
+	background: -webkit-linear-gradient(top, #eee, #ddd);
+	background: -moz-linear-gradient(top, #eee, #ddd);
+	background: linear-gradient(top, #eee, #ddd);
 	text-shadow: 0 1px 1px #fff;
 }
 
@@ -81,6 +83,7 @@ a:active	{
 
 .brand-title 	{
 	text-decoration: underline;
+	color: #999;
 }
 
 .brand-categories	{
@@ -118,4 +121,23 @@ img.thumbnail	{
 	color: #c30;
 	margin: 18px 0;
 	padding: 10px 0;
+}
+
+.pagination	{
+	clear: both;
+	display: block;
+	margin: 10px 0;
+}
+
+.nav-item	{
+	display: inline-block;
+	margin: 0 1px;
+	font-size: 14px;
+	text-decoration: none;
+	padding: 0 5px;
+}
+
+.current-page-nav-item	{
+	color: #333 !important;
+	background: #eee;
 }
