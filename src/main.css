@@ -43,26 +43,51 @@ label, a, button, input[type=button], input[type=submit]	{
 	cursor: pointer;
 }
 
+a, a:link	{
+	color: #288CC8;
+}
+
+a:hover,
+a:focus,
+a:active	{
+	color: #c30;
+}
+
+.clear, .clearfix	{
+	clear: both !important;
+	display: block;
+}
+
 .bttn 	{
 	background-image: -webkit-linear-gradient(top, #eee, #ddd);
 	text-shadow: 0 1px 1px #fff;
 }
 
-.results ul	{
-	list-style-type: none;
-	margin: 0;
+.results	{
+	border-top: 1px solid #ccc;
 	padding: 10px 0;
-	border-bottom: 1px dotted #d5d5d5;
+	margin-top: 18px;
 }
 
-.results ul li 	{
-	display: block;
+.brand	{
+	margin: 0;
+	padding: 10px 0;
+	border-bottom: 1px dotted #999;
+}
+
+.brand > div 	{
+	display: table;
+}
+
+.brand-title 	{
+	text-decoration: underline;
 }
 
 .brand-categories	{
 	display: inline-block !important;
 	margin-right: 5px;
 	text-decoration: underline;
+	font-size: 10px;
 }
 
 .brand-episode-title	{
@@ -72,8 +97,25 @@ label, a, button, input[type=button], input[type=submit]	{
 
 .brand-synopsis	{
 	margin-bottom: 18px;
+	clear: both;
 }
 
 .brand-until-time	{
 	font-weight: bold;
+}
+
+img.thumbnail	{
+	float: left;
+	vertical-align: text-top;
+	margin: 0 10px 10px 0;
+	border: 2px solid #fff;
+	padding: 4px;
+	box-shadow: 0 0 3px #666;
+}
+
+.error	{
+	display: block;
+	color: #c30;
+	margin: 18px 0;
+	padding: 10px 0;
 }

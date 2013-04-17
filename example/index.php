@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 $data;
 	if ( isset($_GET['q']) && $_GET['q'] )	{
@@ -36,6 +36,7 @@ $data;
 			echo '<h3>Search results for "' . htmlentities($_GET['q']) .'"</h3>';
 
 			foreach ($media as $brand) {
+
 			echo '<ul id="brand-' . $brand->id . '">';
 				if ($brand->brand_title)
 					echo '<li class="brand-title"><h3><a title="Listen to this series" href="//bbc.co.uk' . $brand->my_series_url . '">' . $brand->brand_title . '</a></h3></li>';
@@ -59,14 +60,19 @@ $data;
 			echo '</ul>';
 			}
 
-
 			?>
 		</div>
 
-		<?php elseif ((isset($data) && !$data->count)) : ?>
+		<?php elseif ( isset($data) && !$data->count ) : ?>
 		
-		<p>
+		<p class="error results">
 			<strong>Sorry, there are no episodes available for your searched brand. Please try later.</strong>
+		</p>
+
+			<?php elseif ( array_key_exists('q', $_GET) && empty($_GET['q']) ) : ?>
+		
+		<p class="error results">
+			<strong>Type a keyword for search results.</strong>
 		</p>
 
 		<?php endif; ?>
