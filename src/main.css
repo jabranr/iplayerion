@@ -26,12 +26,21 @@ p, ul, ol	{
 	border-radius: 3px;
 }
 
-label, input, select, textarea	{
+fieldset, legend, label, input, select, textarea	{
 	padding: 5px 6px;
 	border: 1px solid #ccc;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+}
+
+fieldset	{
+	border: none;
+	margin-bottom: 18px;
+}
+
+fieldset legend	{
+	font-weight: bold;
 }
 
 label	{
@@ -140,4 +149,21 @@ img.thumbnail	{
 .current-page-nav-item	{
 	color: #333 !important;
 	background: #eee;
+}
+
+.advance-search	{
+	display: none;
+	clear: both;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #ccc;
+}
+
+.advance-search fieldset	{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.advance-search:target	{
+	display: block;
 }
